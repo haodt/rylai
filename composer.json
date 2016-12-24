@@ -1,0 +1,23 @@
+{
+	"name": "haodt/rylai",
+	"description": "PHP document export to JSON or import to specific API for distribution around the web",
+	"type": "library",
+	"license": "MIT",
+	"keywords": ["document", "php", "doc to json"],
+	"authors": [{
+		"name": "Hao",
+		"email": "haodt1990@gmail.com"
+	}],
+	"require": {
+		"symfony/console": "^3.2",
+		"goaop/parser-reflection": "^1.1",
+		"phpdocumentor/reflection-docblock": "^3.1",
+		"symfony/finder": "^3.2",
+		"symfony/options-resolver": "^3.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"Rylai\\": "src"
+		}
+	}
+}
