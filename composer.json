@@ -9,11 +9,11 @@
 		"email": "haodt1990@gmail.com"
 	}],
 	"require": {
-		"symfony/console": "*",
+		"symfony/console": "^3.2",
 		"goaop/parser-reflection": "^1.1",
 		"phpdocumentor/reflection-docblock": "^3.1",
-		"symfony/finder": "*",
-		"symfony/options-resolver": "*",
+		"symfony/finder": "^3.2",
+		"symfony/options-resolver": "^3.2",
 		"elasticsearch/elasticsearch": "~2.0"
 	},
 	"autoload": {

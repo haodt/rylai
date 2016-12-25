@@ -4,6 +4,7 @@ namespace Rylai\Console\Commands;
 
 use Rylai\Analyzers\Document;
 use Rylai\Reflection\Directory;
+use Rylai\Stores\Elasticsearch;
 use Rylai\Stores\Local;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -57,6 +58,7 @@ EOF
                 $store = new Local($path . $configs["store"]["path"]);
                 break;
             case "api":
+                $store = new Elasticsearch($configs["store"]);
                 break;
             default:
                 throw new \Exception("Store [$store] is not supported , please provide your own");
