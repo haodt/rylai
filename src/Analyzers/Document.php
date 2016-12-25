@@ -24,69 +24,55 @@ class Document implements AnalyzerInterface
         $namespaces = $file->getReflection()->getFileNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $report->namespaces[] = $this->_analyzeNamespace($namespace);
-        }
+            $report->namespaces[] = $this->_analyze($namespace, function ($report, $docblock) use ($namespace) {
+                $report->classes = [];
+                foreach ($namespace->getClasses() as $class) {
+                    $report->classes[] = $this->_analyze($class, function ($report, $docblock) use ($class) {
+                        $report->constants  = [];
+                        $report->properties = [];
+                        $report->methods    = [];
 
-        return $report;
-    }
+                        foreach ($class->getConstants() as $constant => $value) {
+                            $report->constants[] = [
+                                "name"  => $constant,
+                                "value" => $value,
+                                "type"  => gettype($value),
+                            ];
+                        }
 
-    protected function _analyzeNamespace($namespace)
-    {
-        $report = $this->_analyze($namespace);
+                        foreach ($class->getProperties() as $property) {
+                            $report->properties[] = $this->_analyze($property, function ($report, $docblock) {
+                                $report->variables = [];
+                                foreach ($docblock->getTagsByName("var") as $tag) {
+                                    $report->variables[] = [
+                                        "name"        => $tag->getName(),
+                                        "type"        => (string) $tag->getType(),
+                                        "description" => (string) $tag->getDescription(),
+                                    ];
+                                }
+                            });
+                        }
 
-        $report->classes = [];
-        foreach ($namespace->getClasses() as $class) {
-            $report->classes[] = $this->_analyzeClass($class);
-        }
+                        foreach ($class->getMethods() as $method) {
+                            $report->methods[] = $this->_analyze($method, function ($report, $docblock) {
+                                $report->params = [];
+                                foreach ($docblock->getTagsByName("param") as $tag) {
+                                    $report->params[] = [
+                                        "name"        => $tag->getName(),
+                                        "type"        => (string) $tag->getType(),
+                                        "description" => (string) $tag->getDescription(),
+                                    ];
+                                }
 
-        return $report;
-    }
-
-    protected function _analyzeClass($class)
-    {
-        $report = $this->_analyze($class);
-
-        $report->constants  = [];
-        $report->properties = [];
-        $report->methods    = [];
-
-        foreach ($class->getConstants() as $constant => $value) {
-            $report->constants[] = [
-                "name"  => $constant,
-                "value" => $value,
-                "type"  => gettype($value),
-            ];
-        }
-
-        foreach ($class->getProperties() as $property) {
-            $report->properties[] = $this->_analyze($property, function ($report, $docblock) {
-                $report->variables = [];
-                foreach ($docblock->getTagsByName("var") as $tag) {
-                    $report->variables[] = [
-                        "name"        => $tag->getName(),
-                        "type"        => (string) $tag->getType(),
-                        "description" => (string) $tag->getDescription(),
-                    ];
-                }
-            });
-        }
-
-        foreach ($class->getMethods() as $method) {
-            $report->methods[] = $this->_analyze($method, function ($report, $docblock) {
-                $report->params = [];
-                foreach ($docblock->getTagsByName("param") as $tag) {
-                    $report->params[] = [
-                        "name"        => $tag->getName(),
-                        "type"        => (string) $tag->getType(),
-                        "description" => (string) $tag->getDescription(),
-                    ];
-                }
-
-                foreach ($docblock->getTagsByName("return") as $tag) {
-                    $report->return = [
-                        "type"        => (string) $tag->getType(),
-                        "description" => (string) $tag->getDescription(),
-                    ];
+                                foreach ($docblock->getTagsByName("return") as $tag) {
+                                    $report->return = [
+                                        "type"        => (string) $tag->getType(),
+                                        "description" => (string) $tag->getDescription(),
+                                    ];
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -96,16 +82,22 @@ class Document implements AnalyzerInterface
 
     protected function _analyze($target, $reader = null)
     {
-        $doccomment = $target->getDocComment() ?: "/** */";
-        $docblock   = $this->_factory->create($doccomment);
-        $report     = new \stdClass;
+        $doccomment   = $target->getDocComment() ?: "/** */";
+        $report       = new \stdClass;
+        $report->name = $target->getName();
 
-        $report->summary     = $docblock->getSummary();
-        $report->description = (string) $docblock->getDescription();
-        $report->name        = $target->getName();
+        try {
 
-        if (is_callable($reader)) {
-            $reader($report, $docblock);
+            $docblock = $this->_factory->create($doccomment);
+
+            $report->summary     = $docblock->getSummary();
+            $report->description = (string) $docblock->getDescription();
+            if (is_callable($reader)) {
+                $reader($report, $docblock);
+            }
+
+        } catch (\Exception $e) {
+            $report->summary = "Whoops , we cannot understand this document";
         }
 
         return $report;

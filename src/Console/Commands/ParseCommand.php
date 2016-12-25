@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class ParseCommand extends Command
 {
@@ -24,21 +25,48 @@ EOF
 
         $this
             ->addArgument(
-                "import",
+                "configs",
                 InputArgument::REQUIRED,
-                "Absolute path to directory you want to parse"
+                "Absolute path to configuration file"
+            )
+            ->addArgument(
+                "path",
+                InputArgument::REQUIRED,
+                "Absolute path to folder you want to parse and generate docs"
+            )
+            ->addArgument(
+                "store",
+                InputArgument::REQUIRED,
+                "Store type [local|api] or you can defined your own"
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $import = $input->getArgument("import");
+        $configs = $input->getArgument("configs");
+        $path    = $input->getArgument("path");
+        $store   = $input->getArgument("store");
 
-        $directory = new Directory($import, [
+        if (!file_exists($configs)) {
+            throw new \Exception("Configuration path must be readable [$configs] is not exists or not readable");
+        }
+        $configs = Yaml::parse(file_get_contents($configs));
+
+        switch ($store) {
+            case "local":
+                $store = new Local($path . $configs["store"]["path"]);
+                break;
+            case "api":
+                break;
+            default:
+                throw new \Exception("Store [$store] is not supported , please provide your own");
+        }
+
+        $directory = new Directory($path, [
             "analyzers" => [
                 new Document,
             ],
-            "store"     => new Local,
+            "store"     => $store,
         ]);
     }
 }
