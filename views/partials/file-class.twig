@@ -1,0 +1,110 @@
+{% import 'partials/_macro.twig' as _macro %}
+<section id="class-section-{{ class.name | replace({'\\':'_'}) }}" class="doc-section">
+	<h2 class="section-title">
+		{{ class.name }} 
+		<br>
+		<small>{{ class.summary }}</small>
+	</h2>
+	<div class="section-block">
+		<p>{{ class.description }}</p>
+		{% if class.constants | length > 0 %}
+		<div id="constants-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Constants</h6>
+			<ul class="list">
+				{% for constant in class.constants %}
+					<li>
+						<strong>{{ constant.type }}</strong> {{ constant.name }} = {{ constant.value }}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+		{% if class.parents | length > 0 %}
+		<div id="parents-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Parents</h6>
+			<ul class="list">
+				{% for parent in class.parents %}
+					<li>
+						<a href="{{ parent|link_to }}">{{ parent }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+		{% if class.interfaces | length > 0 %}
+		<div id="interfaces-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Interfaces</h6>
+			<ul class="list">
+				{% for interface in class.interfaces %}
+					<li>
+						<a href="{{ interface|link_to }}">{{ interface }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+		{% if class.traits | length > 0 %}
+		<div id="traits-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Traits</h6>
+			<ul class="list">
+				{% for trait in class.traits %}
+					<li>
+						<a href="{{ trait|link_to }}">{{ trait }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+		{% if class.properties | length > 0 %}
+		<div id="properties-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Properties</h6>
+			<ul class="list">
+				{% for property in class.properties %}
+					<li>
+						<strong>{{ property.modifier }}</strong>
+						<strong class="text-danger">{{ property.type }}</strong> 
+						${{ property.name }}
+						{% if property.value is not null %}
+							= {{ property.value | to_string }}
+						{% endif %}
+						{{ _macro.heading(property.summary,property.description) }}
+						{{ _macro.tags(property.tags) }}
+						{% if property.class != property.name %}
+							<p>
+								<a href="{{ property.class | link_to }}">{{ property.class }}</a>
+							</p>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+
+
+		{% if class.methods | length > 0 %}
+		<div id="methods-section-{{ class.name | replace({'\\':'_'}) }}" class="section-block">
+			<h6>Methods</h6>
+			<ul class="list">
+				{% for method in class.methods %}
+					<li>
+						<strong>{{ method.modifier }}</strong> {{ method.signature }}
+						{{ _macro.tags(method.tags) }}
+						{{ _macro.heading(method.summary,method.description) }}
+						{% if method.class != class.name %}
+							<p>
+								<a href="{{ method.class | link_to }}">{{ method.class }}</a>
+							</p>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}			
+
+
+	</div>
+</section>

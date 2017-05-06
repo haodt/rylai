@@ -3,11 +3,36 @@
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-use Rylai\Console\Commands\ParseCommand;
-use Symfony\Component\Console\Application;
+use Rylai\Analyzers\Docblock;
+use Rylai\Runner\AbstractRunner;
+use Rylai\Stores\Local;
 
-$application = new Application;
+class Runner extends AbstractRunner
+{
+    public function getPaths()
+    {
+        return [
+            "Rylai" => __DIR__ . "/src/",
+        ];
+    }
 
-$application->add(new ParseCommand);
+    public function getAnalyzers()
+    {
+        return [
+            new Docblock,
+        ];
+    }
 
-$application->run();
+    public function getStores()
+    {
+        return [
+            new Local([
+                "views" => __DIR__ . "/views",
+                "store" => __DIR__ . "/docs",
+            ]),
+        ];
+    }
+}
+
+$runner = new Runner();
+$runner->run();

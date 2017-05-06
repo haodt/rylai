@@ -1,0 +1,26 @@
+<section id="namespace-section-{{ namespace.name | replace({'\\':'_'}) }}" class="doc-section">
+	<h2 class="section-title">
+		{{ namespace.name }} 
+		<br>
+		<small>{{ namespace.summary }}</small>
+	</h2>
+	<div class="section-block">
+		<p>{{ namespace.description }}</p>
+
+		{% if namespace.aliases | length > 0 %}
+			<h6>Uses</h6>
+			<ul class="list">
+				{% for alias in namespace.aliases %}
+					<li>
+						<a href="{{ alias.name | link_to }}">
+							{{ alias.name }}
+						</a>
+						{% if alias.alias %}
+							&nbsp;<b>as</b>&nbsp; <span class="text-highlight">{{ alias.alias }}</span>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+</section>

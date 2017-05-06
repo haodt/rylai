@@ -1,0 +1,23 @@
+{% macro tags(tags) %}
+	{% if tags | length > 0 %}
+		<ul class="list">
+			{% for tag in tags %}
+				<li>
+				
+					{% include ['partials/tags/'~tag.name~'.twig','partials/tags/default.twig'] with {tag:tag} %}
+				
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}
+
+{% macro heading(summary,description) %}
+	{% if summary is not empty %}
+		<p><small>{{ summary }}</small></p>
+	{% endif %}
+
+	{% if description is not empty %}
+		<p>{{ description }}</p>
+	{% endif %}
+{% endmacro %}

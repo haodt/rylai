@@ -1,0 +1,57 @@
+<div class="doc-sidebar hidden-xs">
+	<nav id="doc-nav">
+		<ul id="doc-menu" class="nav doc-menu" data-spy="affix">
+			
+			{% for namespace in reports.docblock.namespaces %}
+
+				<li>
+					<a class="scrollto" href="#namespace-section-{{namespace.name | replace({'\\':'_'})}}">
+						Namespace
+					</a>
+					<ul class="nav doc-sub-menu">
+						{% for class in namespace.classes %}
+							<li>
+								<a class="scrollto" href="#class-section-{{class.name | replace({'\\':'_'})}}">
+									Class
+								</a>
+								<ul class="nav doc-sub-menu">
+									<li>
+										<a class="scrollto" href="#constants-section-{{class.name | replace({'\\':'_'})}}">
+											Constants
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#parents-section-{{class.name | replace({'\\':'_'})}}">
+											Parents
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#interfaces-section-{{class.name | replace({'\\':'_'})}}">
+											Interfaces
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#traits-section-{{class.name | replace({'\\':'_'})}}">
+											Traits
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#properties-section-{{class.name | replace({'\\':'_'})}}">
+											Properties
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#methods-section-{{class.name | replace({'\\':'_'})}}">
+											Methods
+										</a>
+									</li>
+								</ul>
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
+
+			{% endfor %}
+		</ul>
+	</nav>
+</div>

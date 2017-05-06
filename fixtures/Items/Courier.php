@@ -2,7 +2,7 @@
 /**
  * Items available in game
  */
-namespace Items;
+namespace Rylai\Fixtures\Items;
 
 /**
  * Courier will delivery your items to you , be aware that people like to kill it

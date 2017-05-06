@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+	<title>Rylai documentations</title>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">    
+	<link rel="shortcut icon" href="favicon.ico">  
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<!-- Global CSS -->
+	<link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css">   
+	<!-- Plugins CSS -->    
+	<link rel="stylesheet" href="../assets/plugins/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="../assets/plugins/prism/prism.css">
+	<link rel="stylesheet" href="../assets/plugins/elegant_font/css/style.css">
+	
+	<!-- Theme CSS -->
+	<link id="theme-style" rel="stylesheet" href="../assets/css/styles.css">
+	
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head> 
+
+<body class="body-green">
+	<div class="page-wrapper">
+		<header id="header" class="header">
+    <div class="container">
+        <div class="branding">
+            <h1 class="logo">
+                <a href="index.html">
+                    <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                    <span class="text-highlight">RYLAI</span><span class="text-bold">Docs</span>
+                </a>
+            </h1>
+        </div>
+
+        <ol class="breadcrumb">
+            <li><a href="index.html">Index</a></li>
+            <li class="active">Reflection/File.php</li>
+        </ol>
+        
+    </div>
+</header>		<div class="doc-wrapper">
+			<div class="container">
+
+				<div id="doc-header" class="doc-header text-center">
+					<h1 class="doc-title"><i class="icon fa fa-file-o"></i> Reflection/File.php</h1>
+					<div class="meta"><i class="fa fa-clock-o"></i> Last updated: 07/05/2017</div>
+				</div>
+
+				<div class="doc-body">
+					<div class="doc-content">
+						<div class="content-inner">
+															<section id="namespace-section-Rylai_Reflection" class="doc-section">
+	<h2 class="section-title">
+		Rylai\Reflection 
+		<br>
+		<small></small>
+	</h2>
+	<div class="section-block">
+		<p></p>
+
+					<h6>Uses</h6>
+			<ul class="list">
+									<li>
+						<a href="#">
+							Go\ParserReflection\ReflectionFile
+						</a>
+													&nbsp;<b>as</b>&nbsp; <span class="text-highlight">ReflectionFile</span>
+											</li>
+							</ul>
+			</div>
+</section>
+																	<section id="class-section-Rylai_Reflection_File" class="doc-section">
+	<h2 class="section-title">
+		Rylai\Reflection\File 
+		<br>
+		<small>File abstraction</small>
+	</h2>
+	<div class="section-block">
+		<p>From raw file name eg `/var/www/SomeClass.php`</p>
+		
+		
+		
+		
+				<div id="properties-section-Rylai_Reflection_File" class="section-block">
+			<h6>Properties</h6>
+			<ul class="list">
+									<li>
+						<strong>protected</strong>
+						<strong class="text-danger">\ReflectionFile</strong> 
+						$_reflection
+													= ?
+															<p><small>File reflection with attribute needed</small></p>
+	
+	
+							
+													<p>
+								<a href="Reflection_File.html">Rylai\Reflection\File</a>
+							</p>
+											</li>
+									<li>
+						<strong>protected</strong>
+						<strong class="text-danger">string</strong> 
+						$_name
+													= ?
+															<p><small>File name as in absolute path + file name</small></p>
+	
+	
+							
+													<p>
+								<a href="Reflection_File.html">Rylai\Reflection\File</a>
+							</p>
+											</li>
+							</ul>
+		</div>
+		
+
+				<div id="methods-section-Rylai_Reflection_File" class="section-block">
+			<h6>Methods</h6>
+			<ul class="list">
+									<li>
+						<strong>public</strong> __construct($path,$root)
+									<ul class="list">
+							<li>
+				
+					@param <strong class="text-danger">string</strong> path 				
+				</li>
+							<li>
+				
+					@param <strong class="text-danger">string</strong> root 				
+				</li>
+					</ul>
+	
+									<p><small>Constructing instance</small></p>
+	
+			<p>File name will be cut from difference between path to file and root path eg for path as `/var/www/test/sample/Test.php` and root as `/var/www/test/` , name will be sample/Test.php</p>
+	
+											</li>
+									<li>
+						<strong>public</strong> getName()
+									<ul class="list">
+							<li>
+				
+					@return <strong class="text-danger">string</strong> 				
+				</li>
+					</ul>
+	
+									<p><small>Get file name</small></p>
+	
+			<p>This will be used for identify file in report</p>
+	
+											</li>
+									<li>
+						<strong>public</strong> getReflection()
+									<ul class="list">
+							<li>
+				
+					@return <strong class="text-danger">\ReflectionFile</strong> 				
+				</li>
+					</ul>
+	
+									<p><small>Get file reflection</small></p>
+	
+			<p>File reflection about its properties , methods ...</p>
+	
+											</li>
+							</ul>
+		</div>
+					
+
+
+	</div>
+</section>								
+													</div>
+					</div>
+					<div class="doc-sidebar hidden-xs">
+	<nav id="doc-nav">
+		<ul id="doc-menu" class="nav doc-menu" data-spy="affix">
+			
+			
+				<li>
+					<a class="scrollto" href="#namespace-section-Rylai_Reflection">
+						Namespace
+					</a>
+					<ul class="nav doc-sub-menu">
+													<li>
+								<a class="scrollto" href="#class-section-Rylai_Reflection_File">
+									Class
+								</a>
+								<ul class="nav doc-sub-menu">
+									<li>
+										<a class="scrollto" href="#constants-section-Rylai_Reflection_File">
+											Constants
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#parents-section-Rylai_Reflection_File">
+											Parents
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#interfaces-section-Rylai_Reflection_File">
+											Interfaces
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#traits-section-Rylai_Reflection_File">
+											Traits
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#properties-section-Rylai_Reflection_File">
+											Properties
+										</a>
+									</li>
+									<li>
+										<a class="scrollto" href="#methods-section-Rylai_Reflection_File">
+											Methods
+										</a>
+									</li>
+								</ul>
+							</li>
+											</ul>
+				</li>
+
+					</ul>
+	</nav>
+</div>				</div>             
+			</div>
+		</div>
+		
+	</div>
+	
+	<footer id="footer" class="footer text-center">
+		<div class="container">
+			<small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com/" targe="_blank">Xiaoying Riley</a> for developers</small>
+		</div>
+	</footer>
+	
+	 
+	<!-- Main Javascript -->          
+	<script type="text/javascript" src="../assets/plugins/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../assets/plugins/prism/prism.js"></script>    
+	<script type="text/javascript" src="../assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>                                                                
+	<script type="text/javascript" src="../assets/plugins/jquery-match-height/jquery.matchHeight-min.js"></script>
+	<script type="text/javascript" src="../assets/js/main.js"></script>
+	
+	
+</body>
+</html> 
+

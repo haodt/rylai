@@ -7,4 +7,6 @@ use Rylai\Reflection\File;
 interface AnalyzerInterface
 {
     public function analyze(File $file);
+
+    public function getName();
 }
